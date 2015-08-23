@@ -13,6 +13,19 @@ JAWS is a simple wifi scanner for Android. It will be available on F-Droid soon.
 - Display SSID, BSSID, Channel and the signal strength of each network
 - Periodically rescan for new networks
 
+# License
+ ![gpl3](https://www.gnu.org/graphics/gplv3-127x51.png)
+
+  JAWS is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  JAWS is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
 # TODO
 - Add preferences (e.g. sync interval)
 - Show network capabilities
