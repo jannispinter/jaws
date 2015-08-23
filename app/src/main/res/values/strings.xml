@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">JAWS</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_about">About JAWS</string>
+    <string name="title_activity_about">About JAWS</string>
+
+
+    <string name="about_message" translatable="false">
+		JAWS • Just another WiFi scanner
+		\n\nCopyright © 2015 Jannis Pinter
+		\n\nThis program is free software: you can redistribute it and/or modify
+		it under the terms of the GNU General Public License as published by
+		the Free Software Foundation, either version 3 of the License, or
+		(at your option) any later version.
+		\n\nThis program is distributed in the hope that it will be useful,
+		but WITHOUT ANY WARRANTY; without even the implied warranty of
+		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		GNU General Public License for more details.
+		\n\nYou should have received a copy of the GNU General Public License
+		along with this program. If not, see https://www.gnu.org/licenses
+		\n\nDownload the full source code at https://github.com/jannispinter/jaws
+		\n\n\nLibraries:
+		\nhttps://github.com/lzyzsd/CircleProgress\n(DWTFYWPL, Version 2)
+		\n\n\n
+	</string>
+</resources>

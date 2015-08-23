@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <!--  ListRow Left sied Thumbnail image -->
+    <LinearLayout xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="10dip">
+
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:id="@+id/network_donut_progress"
+            android:layout_width="70dip"
+            android:layout_height="70dip"
+            custom:donut_progress="30"/>
+
+    </LinearLayout>
+
+    <!-- SSID-->
+    <TextView
+        android:id="@+id/network_ssid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="SSID"
+        android:textColor="#040404"
+        android:typeface="sans"
+        android:textSize="15dip"
+        android:textStyle="bold"/>
+
+    <!-- BSSID -->
+    <TextView
+        android:id="@+id/network_bssid"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/network_ssid"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:layout_marginTop="1dip"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="BSSID" />
+
+    <!-- Signal -->
+    <TextView
+        android:id="@+id/network_signal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/network_ssid"
+        android:gravity="right"
+        android:text="0 dBm"
+        android:layout_marginRight="5dip"
+        android:textSize="10dip"
+        android:textColor="#00ff00"
+        android:textStyle="bold"/>
+
+    <!-- Channel -->
+    <TextView
+        android:id="@+id/network_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Channel: 1"
+        android:textSize="10dip"
+        android:textStyle="bold"
+        android:layout_below="@+id/network_ssid"
+        android:layout_alignRight="@+id/network_signal"
+        android:layout_alignEnd="@+id/network_signal" />
+
+</RelativeLayout>
