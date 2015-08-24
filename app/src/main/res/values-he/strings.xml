@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">JAWS</string>
+
+    <string name="action_settings">הגדרות</string>
+    <string name="action_about">אודות JAWS</string>
+    <string name="title_activity_about">אודות JAWS</string>
+
+</resources>
