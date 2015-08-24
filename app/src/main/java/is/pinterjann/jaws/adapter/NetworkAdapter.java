@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -54,27 +55,51 @@ public class NetworkAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.network_row, null);
         }
 
-        TextView ssid           = (TextView) convertView.findViewById(R.id.network_ssid);
-        TextView bssid          = (TextView) convertView.findViewById(R.id.network_bssid);
-        TextView signal         = (TextView) convertView.findViewById(R.id.network_signal);
-        TextView channel        = (TextView) convertView.findViewById(R.id.network_channel);
-        DonutProgress signalDonutProgress   = (DonutProgress) convertView.findViewById(R.id.network_donut_progress);
+        TextView ssid               = (TextView) convertView.findViewById(R.id.network_ssid);
+        TextView bssid              = (TextView) convertView.findViewById(R.id.network_bssid);
+        TextView signal             = (TextView) convertView.findViewById(R.id.network_signal);
+        TextView channel            = (TextView) convertView.findViewById(R.id.network_channel);
+        ImageView cap_badge_ess     = (ImageView) convertView.findViewById(R.id.cap_badge_ess);
+        ImageView cap_badge_crypto  = (ImageView) convertView.findViewById(R.id.cap_badge_crypto);
+        ImageView cap_badge_wps     = (ImageView) convertView.findViewById(R.id.cap_badge_wps);
+        DonutProgress signalDonutProgress   = (DonutProgress)
+                convertView.findViewById(R.id.network_donut_progress);
+
 
         WirelessNetwork network = networkList.get(position);
         ssid.setText(network.getSsid());
         bssid.setText(network.getBssid());
-
         signal.setText(network.getSignal() + " dBm");
         signal.setTextColor(SignalColor.getColor(network.getSignal()));
         signalDonutProgress.setProgress(WifiManager.calculateSignalLevel(network.getSignal(), 100));
-        signalDonutProgress.setTextColor(SignalColor.getColor((network.getSignal())));
-        signalDonutProgress.setFinishedStrokeColor(SignalColor.getColor((network.getSignal())));
-
         channel.setText("Channel: " + network.getChannel());
+
+        /* Check ESS */
+        if(network.getSecurity().contains("ESS")) {
+            cap_badge_ess.setVisibility(View.VISIBLE);
+        } else {
+            cap_badge_ess.setVisibility(View.INVISIBLE);
+        }
+
+        /* Check cryptography */
+        if(network.getSecurity().contains("WPA2")) {
+            cap_badge_crypto.setImageResource(R.mipmap.cap_badge_wpa2);
+        } else if (network.getSecurity().contains("WPA")) {
+            cap_badge_crypto.setImageResource(R.mipmap.cap_badge_wpa);
+        } else if(network.getSecurity().contains("WEP")) {
+            cap_badge_crypto.setImageResource(R.mipmap.cap_badge_wep);
+        } else {
+            cap_badge_crypto.setImageResource(R.mipmap.cap_badge_open);
+        }
+
+        /* Check WPS */
+        if(network.getSecurity().contains("WPS")) {
+            cap_badge_wps.setVisibility(View.VISIBLE);
+        } else {
+            cap_badge_wps.setVisibility(View.INVISIBLE);
+        }
 
         return convertView;
     }
-
-
 
 }
