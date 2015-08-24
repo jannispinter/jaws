@@ -19,25 +19,25 @@ import is.pinterjann.jaws.R;
 
 public class NetworkAdapter extends BaseAdapter {
 
-    private List<WirelessNetwork> mNetworkList = new ArrayList<WirelessNetwork>();
+    private List<WirelessNetwork> networkList = new ArrayList<>();
 
     public List<WirelessNetwork> getNetworkList() {
-        return mNetworkList;
+        return networkList;
     }
 
     public void setNetworkList(List<WirelessNetwork> networkList) {
-        this.mNetworkList = networkList;
+        this.networkList = networkList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return mNetworkList.size();
+        return networkList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mNetworkList.get(position);
+        return networkList.get(position);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class NetworkAdapter extends BaseAdapter {
         TextView channel        = (TextView) convertView.findViewById(R.id.network_channel);
         DonutProgress signalDonutProgress   = (DonutProgress) convertView.findViewById(R.id.network_donut_progress);
 
-        WirelessNetwork network = mNetworkList.get(position);
+        WirelessNetwork network = networkList.get(position);
         ssid.setText(network.getSsid());
         bssid.setText(network.getBssid());
 

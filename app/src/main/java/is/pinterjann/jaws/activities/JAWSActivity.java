@@ -25,9 +25,9 @@ import is.pinterjann.jaws.model.WirelessNetwork;
 
 public class JAWSActivity extends AppCompatActivity {
 
-    private WifiManager mWifiManager;
-    private NetworkAdapter mNetworkAdapter;
-    private BroadcastReceiver mWifiScanReceiver;
+    private WifiManager wifiManager;
+    private NetworkAdapter networkAdapter;
+    private BroadcastReceiver wifiScanReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,27 +35,27 @@ public class JAWSActivity extends AppCompatActivity {
         setContentView(R.layout.activity_jaws);
 
         ListView listview = (ListView) findViewById(R.id.list);
-        mNetworkAdapter = new NetworkAdapter();
-        listview.setAdapter(mNetworkAdapter);
+        networkAdapter = new NetworkAdapter();
+        listview.setAdapter(networkAdapter);
 
-        mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        if (!mWifiManager.isWifiEnabled()) {
+        wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        if (!wifiManager.isWifiEnabled()) {
             Toast.makeText(getApplicationContext(), "WiFi was disabled, enabling wifi...",
                     Toast.LENGTH_LONG).show();
-            mWifiManager.setWifiEnabled(true);
+            wifiManager.setWifiEnabled(true);
         }
 
-        mWifiScanReceiver = new WifiScanReceiver();
-        registerReceiver(mWifiScanReceiver, new IntentFilter(
+        wifiScanReceiver = new WifiScanReceiver();
+        registerReceiver(wifiScanReceiver, new IntentFilter(
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
-        mWifiManager.startScan();
+        wifiManager.startScan();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mWifiScanReceiver);
+        unregisterReceiver(wifiScanReceiver);
     }
 
     @Override
@@ -86,20 +86,20 @@ public class JAWSActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context c, Intent intent) {
-            List<ScanResult> results = mWifiManager.getScanResults();
-            List<WirelessNetwork> networkList = new ArrayList<WirelessNetwork>();
+            List<ScanResult> results = wifiManager.getScanResults();
+            List<WirelessNetwork> networkList = new ArrayList<>();
             for (android.net.wifi.ScanResult result : results) {
                 WirelessNetwork network = new WirelessNetwork(result.BSSID, result.SSID,
                         FrequencyConverter.convert(result.frequency), result.level,
-                        result.capabilities.toString(), new Date().getTime()
+                        result.capabilities, new Date().getTime()
                 );
                 networkList.add(network);
             }
             Collections.sort(networkList);
-            mNetworkAdapter.setNetworkList(networkList);
+            networkAdapter.setNetworkList(networkList);
 
             // Request another scan from the OS
-            mWifiManager.startScan();
+            wifiManager.startScan();
         }
     }
 }
