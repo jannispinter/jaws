@@ -4,7 +4,6 @@ Just another wifi scanner
 [![Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=is.pinterjann.jaws) [![F-Droid](https://f-droid.org/wiki/images/1/13/F-Droid-button.svg)](https://f-droid.org/repository/browse/?fdid=is.pinterjann.jaws)
 
 ![screenshot_phone](https://raw.githubusercontent.com/jannispinter/jaws/master/screenshot_phone_framed.png)
-![screenshot_tablet](https://raw.githubusercontent.com/jannispinter/jaws/master/screenshot_tablet_framed.png)
 
 A simple free and open source wifi scanner that supports real time scans of nearby networks. It displays a list of nearby wifi networks ordered by signal strength and periodically rescans for new networks.
 
