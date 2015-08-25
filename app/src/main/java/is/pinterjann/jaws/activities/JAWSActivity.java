@@ -4,17 +4,23 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -28,22 +34,25 @@ public class JAWSActivity extends AppCompatActivity {
     private WifiManager wifiManager;
     private NetworkAdapter networkAdapter;
     private BroadcastReceiver wifiScanReceiver;
+    private SharedPreferences sharedPreferences;
+    private boolean isScanning = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jaws);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         ListView listview = (ListView) findViewById(R.id.list);
         networkAdapter = new NetworkAdapter();
         listview.setAdapter(networkAdapter);
 
         wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        if (!wifiManager.isWifiEnabled()) {
-            Toast.makeText(getApplicationContext(), "WiFi was disabled, enabling wifi...",
-                    Toast.LENGTH_LONG).show();
-            wifiManager.setWifiEnabled(true);
-        }
 
         /* Fake networks for screenshots
         List<WirelessNetwork> networkList = new ArrayList<>();
@@ -65,13 +74,27 @@ public class JAWSActivity extends AppCompatActivity {
         registerReceiver(wifiScanReceiver, new IntentFilter(
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
-        wifiManager.startScan();
+        startScanning();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopScanning();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startScanning();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(wifiScanReceiver);
+        stopScanning();
     }
 
     @Override
@@ -86,8 +109,8 @@ public class JAWSActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Toast.makeText(getApplicationContext(), "Settings are not implemented yet",
-                    Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.action_about) {
             Intent intent = new Intent(this, AboutActivity.class);
@@ -96,6 +119,26 @@ public class JAWSActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startScanning() {
+        isScanning = true;
+
+        if (!wifiManager.isWifiEnabled()) {
+            Toast.makeText(getApplicationContext(), "WiFi was disabled, enabling wifi...",
+                    Toast.LENGTH_LONG).show();
+            wifiManager.setWifiEnabled(true);
+        }
+        /* Start AsyncTask to scan for networks in the background */
+        new WifiScanAsyncTask().execute();
+    }
+
+    private void stopScanning() {
+        isScanning = false;
+
+        if(sharedPreferences.getBoolean("switch_wifi_off_when_not_scanning", false)) {
+            wifiManager.setWifiEnabled(false);
+        }
     }
 
     public class WifiScanReceiver extends BroadcastReceiver {
@@ -111,11 +154,43 @@ public class JAWSActivity extends AppCompatActivity {
                 );
                 networkList.add(network);
             }
-            Collections.sort(networkList);
-            networkAdapter.setNetworkList(networkList);
 
-            // Request another scan from the OS
-            wifiManager.startScan();
+            /* Sort networks based on preferences */
+            if (sharedPreferences.getString("network_order", "first").equals("first")) {
+                Collections.sort(networkList);
+            } else {
+                Collections.sort(networkList, new Comparator<WirelessNetwork>() {
+                    @Override
+                    public int compare(WirelessNetwork lhs, WirelessNetwork rhs) {
+                        return lhs.getSignal() - rhs.getSignal();
+                    }
+                });
+            }
+
+            /* Disable loading animation */
+            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+            networkAdapter.setNetworkList(networkList);
+        }
+    }
+
+    public class WifiScanAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            while(isScanning) {
+                wifiManager.startScan();
+
+                try {
+                    int interval = Integer.parseInt(sharedPreferences.getString("scan_interval", "1000"));
+                    Thread.sleep(interval);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
         }
     }
 }

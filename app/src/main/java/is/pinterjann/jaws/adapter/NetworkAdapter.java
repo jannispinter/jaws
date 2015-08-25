@@ -72,7 +72,9 @@ public class NetworkAdapter extends BaseAdapter {
         signal.setText(network.getSignal() + " dBm");
         signal.setTextColor(SignalColor.getColor(network.getSignal()));
         signalDonutProgress.setProgress(WifiManager.calculateSignalLevel(network.getSignal(), 100));
-        channel.setText("Channel: " + network.getChannel());
+
+        String channelTranslation = convertView.getResources().getString(R.string.network_channel);
+        channel.setText(channelTranslation + ": " + network.getChannel());
 
         /* Check ESS */
         if(network.getSecurity().contains("ESS")) {

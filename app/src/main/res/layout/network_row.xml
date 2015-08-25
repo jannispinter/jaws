@@ -17,6 +17,8 @@
             android:id="@+id/network_donut_progress"
             android:layout_width="70dip"
             android:layout_height="70dip"
+            custom:donut_finished_color="#3f51b5"
+            custom:donut_text_color="#3f51b5"
             custom:donut_progress="30"/>
 
     </LinearLayout>
