@@ -17,7 +17,7 @@
     <string name="toast_wifi_enabled">WiFi automatically enabled</string>
 
     <string name="about_message" translatable="false">
-		JAWS 0.2.1 • Just another WiFi scanner
+		JAWS 0.3 • Just another WiFi scanner
 		\n\nCopyright © 2015 Jannis Pinter
 		\n\nThis program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
