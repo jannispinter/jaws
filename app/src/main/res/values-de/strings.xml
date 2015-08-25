@@ -11,5 +11,9 @@
     <string name="pref_general">Allgemein</string>
     <string name="pref_scan_interval">Suchintervall</string>
     <string name="pref_network_order">Netzwerk Sortierung</string>
+    <string name="pref_switch_wifi_off_when_not_scanning">Akku schonen</string>
+    <string name="pref_switch_wifi_off_when_not_scanning_summary">WLAN nach Verwendung ausschalten</string>
+
+    <string name="toast_wifi_enabled">WLAN automatisch eingeschaltet</string>
 
 </resources>

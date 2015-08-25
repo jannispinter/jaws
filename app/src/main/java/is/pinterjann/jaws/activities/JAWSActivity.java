@@ -125,7 +125,8 @@ public class JAWSActivity extends AppCompatActivity {
         isScanning = true;
 
         if (!wifiManager.isWifiEnabled()) {
-            Toast.makeText(getApplicationContext(), "WiFi was disabled, enabling wifi...",
+            String toastTranslation = getResources().getString(R.string.toast_wifi_enabled);
+            Toast.makeText(getApplicationContext(), toastTranslation,
                     Toast.LENGTH_LONG).show();
             wifiManager.setWifiEnabled(true);
         }
