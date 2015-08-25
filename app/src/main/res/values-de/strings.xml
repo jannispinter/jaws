@@ -4,5 +4,12 @@
     <string name="action_settings">Einstellungen</string>
     <string name="action_about">Über JAWS</string>
     <string name="title_activity_about">Über JAWS</string>
+    <string name="title_activity_settings">Einstellungen</string>
+
+    <string name="network_channel">Kanal</string>
+
+    <string name="pref_general">Allgemein</string>
+    <string name="pref_scan_interval">Suchintervall</string>
+    <string name="pref_network_order">Netzwerk Sortierung</string>
 
 </resources>

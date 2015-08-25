@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_scan_interval_titles">
+        <item>Echtzeit</item>
+        <item>1 Sekunde</item>
+        <item>5 Sekunden</item>
+        <item>10 Sekunden</item>
+        <item>30 Sekunden</item>
+        <item>1 Minute</item>
+        <item>5 Minuten</item>
+    </string-array>
+
+    <string-array name="pref_network_order_titles">
+        <item>Stärkstes Signal zuerst</item>
+        <item>Stärkstes Signal zuletzt</item>
+    </string-array>
+
+</resources>

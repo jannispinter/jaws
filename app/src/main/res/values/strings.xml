@@ -4,10 +4,19 @@
     <string name="action_settings">Settings</string>
     <string name="action_about">About JAWS</string>
     <string name="title_activity_about">About JAWS</string>
+	<string name="title_activity_settings">Settings</string>
+
+	<string name="network_channel">Channel</string>
+
+	<string name="pref_general">General</string>
+	<string name="pref_scan_interval">Scan interval</string>
+	<string name="pref_network_order">Network order</string>
+    <string name="pref_switch_wifi_off_when_not_scanning">Safe battery</string>
+    <string name="pref_switch_wifi_off_when_not_scanning_summary">Switch off WiFi after usage</string>
 
 
     <string name="about_message" translatable="false">
-		JAWS • Just another WiFi scanner
+		JAWS 0.2.1 • Just another WiFi scanner
 		\n\nCopyright © 2015 Jannis Pinter
 		\n\nThis program is free software: you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
