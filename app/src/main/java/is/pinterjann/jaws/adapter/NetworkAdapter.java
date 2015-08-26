@@ -71,7 +71,7 @@ public class NetworkAdapter extends BaseAdapter {
         bssid.setText(network.getBssid());
         signal.setText(network.getSignal() + " dBm");
         signal.setTextColor(SignalColor.getColor(network.getSignal()));
-        signalDonutProgress.setProgress(WifiManager.calculateSignalLevel(network.getSignal(), 100));
+        signalDonutProgress.setProgress(WifiManager.calculateSignalLevel(network.getSignal(), 100) + 1);
 
         String channelTranslation = convertView.getResources().getString(R.string.network_channel);
         channel.setText(channelTranslation + ": " + network.getChannel());
