@@ -35,18 +35,19 @@ public class JAWSActivity extends AppCompatActivity {
     private NetworkAdapter networkAdapter;
     private BroadcastReceiver wifiScanReceiver;
     private SharedPreferences sharedPreferences;
+    private Toolbar toolbar;
+
     private boolean isScanning = true;
+    private boolean jawsAutoEnabledWifi = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jaws);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         ListView listview = (ListView) findViewById(R.id.list);
         networkAdapter = new NetworkAdapter();
@@ -68,6 +69,7 @@ public class JAWSActivity extends AppCompatActivity {
         networkList.add(new WirelessNetwork("49:97:33:B9:25:4E", "JAWS 4", 5, -59, "ESS WPA2 WPS", new Date().getTime()));
         Collections.sort(networkList);
         networkAdapter.setNetworkList(networkList);
+        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         */
 
         wifiScanReceiver = new WifiScanReceiver();
@@ -75,7 +77,6 @@ public class JAWSActivity extends AppCompatActivity {
                 WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
         startScanning();
-
     }
 
     @Override
@@ -95,6 +96,10 @@ public class JAWSActivity extends AppCompatActivity {
         super.onDestroy();
         unregisterReceiver(wifiScanReceiver);
         stopScanning();
+
+        if(sharedPreferences.getBoolean("switch_wifi_off_when_not_scanning", false) && jawsAutoEnabledWifi) {
+            wifiManager.setWifiEnabled(false);
+        }
     }
 
     @Override
@@ -125,6 +130,7 @@ public class JAWSActivity extends AppCompatActivity {
         isScanning = true;
 
         if (!wifiManager.isWifiEnabled()) {
+            jawsAutoEnabledWifi = true;
             String toastTranslation = getResources().getString(R.string.toast_wifi_enabled);
             Toast.makeText(getApplicationContext(), toastTranslation,
                     Toast.LENGTH_LONG).show();
@@ -136,10 +142,6 @@ public class JAWSActivity extends AppCompatActivity {
 
     private void stopScanning() {
         isScanning = false;
-
-        if(sharedPreferences.getBoolean("switch_wifi_off_when_not_scanning", false)) {
-            wifiManager.setWifiEnabled(false);
-        }
     }
 
     public class WifiScanReceiver extends BroadcastReceiver {
