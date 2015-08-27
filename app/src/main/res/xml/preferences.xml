@@ -10,7 +10,7 @@
             android:summary="%s"
             android:title="@string/pref_scan_interval"/>
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="first"
             android:entries="@array/pref_network_order_titles"
             android:entryValues="@array/pref_network_order_values"
             android:key="network_order"
