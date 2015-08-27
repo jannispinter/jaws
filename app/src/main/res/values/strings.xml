@@ -11,7 +11,7 @@
 	<string name="pref_general">General</string>
 	<string name="pref_scan_interval">Scan interval</string>
 	<string name="pref_network_order">Network order</string>
-    <string name="pref_switch_wifi_off_when_not_scanning">Safe battery</string>
+    <string name="pref_switch_wifi_off_when_not_scanning">Save battery</string>
     <string name="pref_switch_wifi_off_when_not_scanning_summary">Switch off WiFi after usage</string>
 
     <string name="toast_wifi_enabled">WiFi automatically enabled</string>
