@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import is.pinterjann.jaws.R;
 import is.pinterjann.jaws.adapter.NetworkAdapter;
@@ -168,6 +170,20 @@ public class JAWSActivity extends AppCompatActivity {
                         return lhs.getSignal() - rhs.getSignal();
                     }
                 });
+            }
+
+            /* Add sticked networks to the top of the list */
+            Set<String> stickedNetworks = sharedPreferences.getStringSet("pinned_networks", new HashSet<String>());
+            for (String networkString : stickedNetworks) {
+                WirelessNetwork network = new WirelessNetwork(networkString);
+                if(networkList.contains(network)) {
+                    int position = networkList.indexOf(network);
+                    WirelessNetwork origNetwork = networkList.get(position);
+                    networkList.remove(position);
+                    networkList.add(0, origNetwork);
+                } else {
+                    networkList.add(0, network);
+                }
             }
 
             /* Disable loading animation */

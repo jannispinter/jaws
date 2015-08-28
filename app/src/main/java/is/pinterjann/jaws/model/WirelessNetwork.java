@@ -1,5 +1,7 @@
 package is.pinterjann.jaws.model;
 
+import java.util.Date;
+
 public class WirelessNetwork implements Comparable {
     private String bssid;
     private String ssid;
@@ -15,6 +17,21 @@ public class WirelessNetwork implements Comparable {
         this.signal = signal;
         this.security = security;
         this.timestamp = timestamp;
+    }
+
+    /* Builds a network from a given string produced by WirelessNetwork.toString() */
+    public WirelessNetwork(String networkString) {
+
+        // TODO: add some input validation
+
+        String[] networkInfo = networkString.split(";");
+        this.bssid = networkInfo[0];
+        this.channel = Integer.parseInt(networkInfo[1]);
+        this.security = networkInfo[2];
+        this.ssid = networkInfo[3];
+
+        this.signal = 0;
+        this.timestamp = new Date().getTime();
     }
 
     public String getBssid() {
@@ -66,7 +83,27 @@ public class WirelessNetwork implements Comparable {
     }
 
     @Override
+    public boolean equals(Object otherNetwork) {
+        if(otherNetwork instanceof  WirelessNetwork) {
+            WirelessNetwork network = (WirelessNetwork) otherNetwork;
+            if (getBssid().equals(network.getBssid()) &&
+                    getSsid().equals(network.getSsid()) &&
+                    getChannel() == network.getChannel() &&
+                    getSecurity().equals(network.getSecurity())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public int compareTo(Object otherNetwork) {
         return ((WirelessNetwork)otherNetwork).getSignal() - this.getSignal();
     }
+
+    @Override
+    public String toString() {
+        return getBssid() + ";" + getChannel() + ";" + getSecurity() + ";" + getSsid();
+    }
+
 }

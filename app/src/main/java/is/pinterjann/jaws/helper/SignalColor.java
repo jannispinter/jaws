@@ -12,6 +12,11 @@ public class SignalColor {
 
     public static int getColor(int signal) {
 
+        /* in case the network is out of range */
+        if(signal == 0) {
+            return PASTEL_RED_DARK;
+        }
+
         int signalPercent = WifiManager.calculateSignalLevel(signal, 5);
 
         /* carefully chosen pastel colors */

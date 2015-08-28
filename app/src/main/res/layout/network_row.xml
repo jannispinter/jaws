@@ -20,7 +20,7 @@
             custom:donut_finished_color="#3f51b5"
             custom:donut_text_color="#3f51b5"
             custom:donut_text_size="16dp"
-            custom:donut_progress="30"/>
+            custom:donut_progress="0"/>
 
     </LinearLayout>
 
@@ -104,5 +104,16 @@
         android:layout_below="@+id/network_bssid"
         android:layout_toRightOf="@+id/cap_badge_crypto"
         android:src="@mipmap/cap_badge_wps" />
+
+    <!-- Stick -->
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/network_btn_stick"
+        android:layout_alignTop="@+id/cap_badge_wps"
+        android:layout_alignRight="@+id/network_channel"
+        android:layout_alignEnd="@+id/network_channel"
+        android:src="@drawable/ic_pin_unpinned"
+        android:background="@android:color/transparent" />
 
 </RelativeLayout>
