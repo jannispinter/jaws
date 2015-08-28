@@ -105,7 +105,7 @@
         android:layout_toRightOf="@+id/cap_badge_crypto"
         android:src="@mipmap/cap_badge_wps" />
 
-    <!-- Stick -->
+    <!-- Pin -->
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

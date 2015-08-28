@@ -172,9 +172,9 @@ public class JAWSActivity extends AppCompatActivity {
                 });
             }
 
-            /* Add sticked networks to the top of the list */
-            Set<String> stickedNetworks = sharedPreferences.getStringSet("pinned_networks", new HashSet<String>());
-            for (String networkString : stickedNetworks) {
+            /* Add pinned networks to the top of the list */
+            Set<String> pinnedNetworks = sharedPreferences.getStringSet("pinned_networks", new HashSet<String>());
+            for (String networkString : pinnedNetworks) {
                 WirelessNetwork network = new WirelessNetwork(networkString);
                 if(networkList.contains(network)) {
                     int position = networkList.indexOf(network);
