@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_scan_interval_titles">
+        <item>זמן אמת</item>
+        <item>שנייה אחת</item>
+        <item>5 שניות</item>
+        <item>10 שניות</item>
+        <item>30 שניות</item>
+        <item>דקה 1</item>
+        <item>5 דקות</item>
+    </string-array>
+
+    <string-array name="pref_network_order_titles">
+        <item>אות חזק ביותר ראשון</item>
+        <item>אות חזק ביותר אחרון</item>
+    </string-array>
+
+</resources>
