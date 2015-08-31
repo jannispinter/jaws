@@ -103,9 +103,9 @@ public class NetworkAdapter extends BaseAdapter {
         }
 
         /* Check cryptography */
-        if(network.getSecurity().contains("WPA2")) {
+        if(network.getSecurity().contains("WPA2-")) {
             cap_badge_crypto.setImageResource(R.mipmap.cap_badge_wpa2);
-        } else if (network.getSecurity().contains("WPA")) {
+        } else if (network.getSecurity().contains("WPA-")) {
             cap_badge_crypto.setImageResource(R.mipmap.cap_badge_wpa);
         } else if(network.getSecurity().contains("WEP")) {
             cap_badge_crypto.setImageResource(R.mipmap.cap_badge_wep);
@@ -151,6 +151,8 @@ public class NetworkAdapter extends BaseAdapter {
                     editor.commit();
                     btn_stick.setImageResource(R.drawable.ic_pin_unpinned);
                 }
+
+                notifyDataSetChanged();
             }
         });
 
