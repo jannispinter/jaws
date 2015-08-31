@@ -78,10 +78,10 @@
     <!-- Capability badges -->
     <ImageView
         android:id="@+id/cap_badge_ess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
         android:layout_marginLeft="-2dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/network_bssid"
         android:layout_toRightOf="@+id/thumbnail"
         android:layout_toEndOf="@+id/thumbnail"
@@ -89,18 +89,18 @@
 
     <ImageView
         android:id="@+id/cap_badge_crypto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/network_bssid"
         android:layout_toRightOf="@+id/cap_badge_ess"
-        android:src="@mipmap/cap_badge_wpa2" />
+        android:src="@mipmap/cap_badge_wpa" />
 
     <ImageView
         android:id="@+id/cap_badge_wps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/network_bssid"
         android:layout_toRightOf="@+id/cap_badge_crypto"
         android:src="@mipmap/cap_badge_wps" />
