@@ -1,5 +1,12 @@
 ###Changelog
 
+####Version 0.4
+* Improved battery saving feature
+* Fixed network ordering preference default value
+* Fixed a typo (en) in preferences
+* Added a feature to pin favorite networks to the top
+* Improved Hebrew translation (thanks GreenLunar)
+
 ####Version 0.3
 * Improved UX and UI
 * Implemented preferences
