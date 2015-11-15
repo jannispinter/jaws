@@ -1,5 +1,8 @@
 ###Changelog
 
+####Version 0.5
+* Fixed Android 6 permission issue
+
 ####Version 0.4
 * Improved battery saving feature
 * Fixed network ordering preference default value
