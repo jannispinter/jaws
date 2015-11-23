@@ -1,15 +1,20 @@
 package is.pinterjann.jaws.activities;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -41,6 +46,9 @@ public class JAWSActivity extends AppCompatActivity {
 
     private boolean isScanning = true;
     private boolean jawsAutoEnabledWifi = false;
+    private boolean accessCoarseLocationPermissionGranted = true;
+
+    private final int PERMISSION_COARSE_LOCATION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +107,7 @@ public class JAWSActivity extends AppCompatActivity {
         unregisterReceiver(wifiScanReceiver);
         stopScanning();
 
-        if(sharedPreferences.getBoolean("switch_wifi_off_when_not_scanning", false) && jawsAutoEnabledWifi) {
+        if (sharedPreferences.getBoolean("switch_wifi_off_when_not_scanning", false) && jawsAutoEnabledWifi) {
             wifiManager.setWifiEnabled(false);
         }
     }
@@ -129,6 +137,7 @@ public class JAWSActivity extends AppCompatActivity {
     }
 
     private void startScanning() {
+
         isScanning = true;
 
         if (!wifiManager.isWifiEnabled()) {
@@ -138,12 +147,43 @@ public class JAWSActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             wifiManager.setWifiEnabled(true);
         }
+
+        /* Request Android permissions for location if API level is 23 or higher */
+        if(Build.VERSION.SDK_INT >= 23) {
+            accessCoarseLocationPermissionGranted = false;
+            requestPermissions();
+        }
+
         /* Start AsyncTask to scan for networks in the background */
         new WifiScanAsyncTask().execute();
+
     }
 
     private void stopScanning() {
         isScanning = false;
+    }
+
+    private void requestPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                                                                PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSION_COARSE_LOCATION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_COARSE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    accessCoarseLocationPermissionGranted = true;
+                } else {
+                    accessCoarseLocationPermissionGranted = false;
+                }
+            }
+        }
     }
 
     public class WifiScanReceiver extends BroadcastReceiver {
@@ -176,7 +216,7 @@ public class JAWSActivity extends AppCompatActivity {
             Set<String> pinnedNetworks = sharedPreferences.getStringSet("pinned_networks", new HashSet<String>());
             for (String networkString : pinnedNetworks) {
                 WirelessNetwork network = new WirelessNetwork(networkString);
-                if(networkList.contains(network)) {
+                if (networkList.contains(network)) {
                     int position = networkList.indexOf(network);
                     WirelessNetwork origNetwork = networkList.get(position);
                     networkList.remove(position);
@@ -198,7 +238,7 @@ public class JAWSActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            while(isScanning) {
+            while (isScanning && accessCoarseLocationPermissionGranted) {
                 wifiManager.startScan();
 
                 try {
@@ -207,6 +247,7 @@ public class JAWSActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
             }
 
             return null;

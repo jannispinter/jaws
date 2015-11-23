@@ -7,7 +7,7 @@ android {
         applicationId "is.pinterjann.jaws"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 6
+        versionCode 7
         versionName '0.5'
     }
     buildTypes {
